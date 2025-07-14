@@ -48,7 +48,7 @@ namespace ZlibStream.Benchmarks
     public class ShortRun : Config
     {
         public ShortRun()
-            => this.AddJob(Job.Default.WithRuntime(CoreRuntime.Core31).WithLaunchCount(1).WithWarmupCount(3).WithIterationCount(3));
+            => this.AddJob(Job.Default.WithRuntime(CoreRuntime.Core80).WithLaunchCount(1).WithWarmupCount(3).WithIterationCount(3));
     }
 
     public class ByteSizeColumn : IColumn

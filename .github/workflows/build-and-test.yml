@@ -15,40 +15,28 @@ jobs:
       matrix:
         options:
           - os: ubuntu-latest
-            framework: net5.0
+            framework: net8.0
             runtime: -x64
             codecov: false
           - os: macos-latest
-            framework: net5.0
+            framework: net8.0
             runtime: -x64
             codecov: false
           - os: windows-latest
-            framework: net5.0
+            framework: net8.0
             runtime: -x64
             codecov: false
           - os: ubuntu-latest
-            framework: netcoreapp3.1
+            framework: net9.0
             runtime: -x64
-            codecov: true
+            codecov: false
           - os: macos-latest
-            framework: netcoreapp3.1
+            framework: net9.0
             runtime: -x64
             codecov: false
           - os: windows-latest
-            framework: netcoreapp3.1
+            framework: net9.0
             runtime: -x64
-            codecov: false
-          - os: windows-latest
-            framework: netcoreapp2.1
-            runtime: -x64
-            codecov: false
-          - os: windows-latest
-            framework: net472
-            runtime: -x64
-            codecov: false
-          - os: windows-latest
-            framework: net472
-            runtime: -x86
             codecov: false
 
     runs-on: ${{matrix.options.os}}
@@ -94,9 +82,8 @@ jobs:
         uses: actions/setup-dotnet@v2
         with:
           dotnet-version: |
-            5.0.x
-            3.1.x
-            2.1.x
+            8.0.x
+            9.0.x
 
       - name: Build
         shell: pwsh
@@ -142,9 +129,9 @@ jobs:
         shell: pwsh
         run: ./ci-pack.ps1
 
-      - name: Publish to MyGet
-        shell: pwsh
-        run: |
-          nuget.exe push .\artifacts\*.nupkg ${{secrets.MYGET_TOKEN}} -Source https://www.myget.org/F/sixlabors/api/v2/package
-          nuget.exe push .\artifacts\*.snupkg ${{secrets.MYGET_TOKEN}} -Source https://www.myget.org/F/sixlabors/api/v3/index.json
-        # TODO: If github.ref starts with 'refs/tags' then it was tag push and we can optionally push out package to nuget.org
+      #- name: Publish to MyGet
+      #  shell: pwsh
+      #  run: |
+      #    nuget.exe push .\artifacts\*.nupkg ${{secrets.MYGET_TOKEN}} -Source https://www.myget.org/F/sixlabors/api/v2/package
+      #    nuget.exe push .\artifacts\*.snupkg ${{secrets.MYGET_TOKEN}} -Source https://www.myget.org/F/sixlabors/api/v3/index.json
+      #  # TODO: If github.ref starts with 'refs/tags' then it was tag push and we can optionally push out package to nuget.org
